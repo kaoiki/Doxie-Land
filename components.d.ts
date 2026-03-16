@@ -18,5 +18,6 @@ declare module 'vue' {
     UBadge: typeof import('./node_modules/.pnpm/@nuxt+ui@4.5.1_@tiptap+extensions@3.20.2_@tiptap+core@3.20.2_@tiptap+pm@3.20.2__@tiptap_ced2f8690891573ec92a550346487398/node_modules/@nuxt/ui/dist/runtime/components/Badge.vue')['default']
     UButton: typeof import('./node_modules/.pnpm/@nuxt+ui@4.5.1_@tiptap+extensions@3.20.2_@tiptap+core@3.20.2_@tiptap+pm@3.20.2__@tiptap_ced2f8690891573ec92a550346487398/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UCard: typeof import('./node_modules/.pnpm/@nuxt+ui@4.5.1_@tiptap+extensions@3.20.2_@tiptap+core@3.20.2_@tiptap+pm@3.20.2__@tiptap_ced2f8690891573ec92a550346487398/node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
+    UIcon: typeof import('./node_modules/.pnpm/@nuxt+ui@4.5.1_@tiptap+extensions@3.20.2_@tiptap+core@3.20.2_@tiptap+pm@3.20.2__@tiptap_ced2f8690891573ec92a550346487398/node_modules/@nuxt/ui/dist/runtime/vue/components/Icon.vue')['default']
   }
 }

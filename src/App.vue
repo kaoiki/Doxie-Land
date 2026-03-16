@@ -18,7 +18,7 @@
             <div
               class="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 text-lg font-bold backdrop-blur-md"
             >
-              D
+              <UIcon name="i-mdi-paw" class="text-xl" />
             </div>
 
             <div>
