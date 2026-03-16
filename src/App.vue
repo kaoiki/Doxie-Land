@@ -10,8 +10,8 @@
         <div class="grid-mask"></div>
       </div>
 
-      <!-- Content -->
-      <section class="relative mx-auto flex min-h-screen max-w-7xl flex-col px-6 py-8">
+      <!-- Main -->
+      <section class="relative mx-auto flex min-h-screen max-w-7xl flex-col px-6 py-6">
         <!-- Header -->
         <header class="flex items-center justify-between">
           <div class="flex items-center gap-3">
@@ -23,7 +23,7 @@
 
             <div>
               <p class="text-lg font-semibold tracking-wide">Doxieland</p>
-              <p class="text-xs text-white/60">Coming soon for dachshund lovers</p>
+              <p class="text-xs text-white/60">A new dachshund community is coming soon</p>
             </div>
           </div>
 
@@ -33,210 +33,141 @@
         </header>
 
         <!-- Hero -->
-        <div class="flex flex-1 items-center">
-          <div class="grid w-full items-center gap-14 lg:grid-cols-2">
-            <!-- Left -->
-            <div>
-              <UBadge color="primary" variant="soft" class="mb-6">
-                A new community is on the way
-              </UBadge>
-
-              <h1
-                class="max-w-4xl text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl"
-              >
-                🐕 A warm new home for
-                <span class="bg-linear-to-r from-amber-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent">
-                  every doxie story
-                </span>
-              </h1>
-
-              <p class="mt-6 max-w-2xl text-lg leading-8 text-white/75">
-                Doxieland is a dachshund-first community for sharing daily life,
-                building dog profiles, learning better care, and joining a space
-                made just for long-bodied little legends.
-              </p>
-
-              <div class="mt-8 flex flex-wrap gap-4">
-                <UButton size="xl" color="primary">
-                  Join Waitlist
-                </UButton>
-
-                <UButton size="xl" variant="outline" color="neutral">
-                  Explore Preview
-                </UButton>
-              </div>
-
-              <div class="mt-8 flex flex-wrap gap-3">
-                <UBadge color="neutral" variant="subtle">Dog profiles</UBadge>
-                <UBadge color="neutral" variant="subtle">Community posts</UBadge>
-                <UBadge color="neutral" variant="subtle">Care tips</UBadge>
-                <UBadge color="neutral" variant="subtle">Q&amp;A</UBadge>
-                <UBadge color="neutral" variant="subtle">Events</UBadge>
-              </div>
-
-              <p class="mt-6 text-sm text-white/55">
-                Early members will get first access when Doxieland opens.
-              </p>
-            </div>
-
-            <!-- Right -->
-            <div class="relative">
-              <div class="absolute -inset-6 rounded-4xl bg-white/5 blur-2xl"></div>
-
-              <UCard class="relative border-white/10 bg-white/8 backdrop-blur-xl">
-                <template #header>
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-sm text-white/55">Launch preview</p>
-                      <h2 class="mt-1 text-xl font-semibold text-white">
-                        What’s coming soon
-                      </h2>
-                    </div>
-
-                    <UBadge color="primary" variant="soft">
-                      MVP
-                    </UBadge>
-                  </div>
-                </template>
-
-                <div class="space-y-4">
-                  <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-                    <p class="text-sm text-white/55">01 · Dog Archive</p>
-                    <p class="mt-2 text-base font-medium text-white">
-                      Build a simple profile for your dachshund with habits,
-                      milestones, health notes and memories.
-                    </p>
-                  </div>
-
-                  <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-                    <p class="text-sm text-white/55">02 · Community Feed</p>
-                    <p class="mt-2 text-base font-medium text-white">
-                      Share daily stories, photos, questions and small moments
-                      with other doxie owners.
-                    </p>
-                  </div>
-
-                  <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
-                    <p class="text-sm text-white/55">03 · Care & Knowledge</p>
-                    <p class="mt-2 text-base font-medium text-white">
-                      Discover better feeding, back care, routines and
-                      dachshund-specific experience.
-                    </p>
-                  </div>
-                </div>
-              </UCard>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Feature teaser -->
-      <section class="relative border-t border-white/10">
-        <div class="mx-auto max-w-7xl px-6 py-20">
-          <div class="mx-auto max-w-2xl text-center">
-            <UBadge color="neutral" variant="subtle" class="mb-4">
-              Launch Preview
-            </UBadge>
-
-            <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
-              Small at launch, meaningful from day one
-            </h2>
-
-            <p class="mt-4 text-lg text-white/65">
-              Doxieland starts as a focused MVP: warm, useful, and built for a
-              real doxie-loving community.
-            </p>
-          </div>
-
-          <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <UCard class="border-white/10 bg-white/6 backdrop-blur-md">
-              <template #header>
-                <UBadge color="primary" variant="subtle">Profiles</UBadge>
-              </template>
-              <h3 class="text-lg font-semibold text-white">Keep your doxie’s story</h3>
-              <p class="mt-3 text-sm leading-6 text-white/65">
-                Save milestones, habits, health notes and the small details that matter.
-              </p>
-            </UCard>
-
-            <UCard class="border-white/10 bg-white/6 backdrop-blur-md">
-              <template #header>
-                <UBadge color="primary" variant="subtle">Community</UBadge>
-              </template>
-              <h3 class="text-lg font-semibold text-white">Meet people who get it</h3>
-              <p class="mt-3 text-sm leading-6 text-white/65">
-                Connect with owners who truly understand dachshund quirks, needs and joy.
-              </p>
-            </UCard>
-
-            <UCard class="border-white/10 bg-white/6 backdrop-blur-md">
-              <template #header>
-                <UBadge color="primary" variant="subtle">Knowledge</UBadge>
-              </template>
-              <h3 class="text-lg font-semibold text-white">Learn better care</h3>
-              <p class="mt-3 text-sm leading-6 text-white/65">
-                Find practical tips about feeding, training, routines and back protection.
-              </p>
-            </UCard>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <section class="relative border-t border-white/10">
-        <div class="mx-auto max-w-7xl px-6 py-20">
-          <div
-            class="rounded-3xl border border-white/10 bg-white/6 p-8 backdrop-blur-xl md:p-12"
-          >
-            <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-              <div class="max-w-2xl">
-                <UBadge color="primary" variant="soft" class="mb-4">
-                  Early Access
+        <div class="flex flex-1 items-center justify-center">
+          <div class="w-full max-w-5xl">
+            <div class="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+              <!-- Left -->
+              <div>
+                <UBadge color="primary" variant="soft" class="mb-5">
+                  Launching Soon
                 </UBadge>
 
-                <h3 class="text-3xl font-bold tracking-tight text-white">
-                  Join the waitlist before launch
-                </h3>
+                <h1
+                  class="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+                >
+                  🐕 A warm little world for
+                  <span class="bg-linear-to-r from-amber-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent">
+                    dachshund lovers
+                  </span>
+                </h1>
 
-                <p class="mt-4 text-lg text-white/70">
-                  Be first in line when Doxieland opens. Early members will get
-                  launch updates and first access to the community.
+                <p class="mt-5 max-w-2xl text-base leading-7 text-white/75 sm:text-lg">
+                  Doxieland is on the way — a cozy community for sharing daily doxie life,
+                  building dog profiles, learning better care, and meeting people who truly get it.
+                </p>
+
+                <div class="mt-6 flex flex-wrap gap-3">
+                  <UBadge color="neutral" variant="subtle">Dog profiles</UBadge>
+                  <UBadge color="neutral" variant="subtle">Community posts</UBadge>
+                  <UBadge color="neutral" variant="subtle">Care tips</UBadge>
+                  <UBadge color="neutral" variant="subtle">Q&amp;A</UBadge>
+                  <UBadge color="neutral" variant="subtle">Events</UBadge>
+                </div>
+
+                <p class="mt-5 text-sm text-white/55">
+                  Early members will get first access when Doxieland opens.
                 </p>
               </div>
 
-              <div class="flex flex-wrap gap-4">
-                <UButton size="xl" color="primary">
-                  Join Waitlist
-                </UButton>
+              <!-- Right -->
+              <div class="relative">
+                <div class="absolute -inset-4 rounded-4xl bg-white/5 blur-2xl"></div>
 
-                <UButton size="xl" variant="outline" color="neutral">
-                  Contact Us
-                </UButton>
+                <UCard class="relative border-white/10 bg-white/8 backdrop-blur-xl">
+                  <div class="space-y-5">
+                    <div>
+                      <p class="text-sm text-white/55">Waitlist</p>
+                      <h2 class="mt-1 text-2xl font-semibold text-white">
+                        Join before launch
+                      </h2>
+                      <p class="mt-3 text-sm leading-6 text-white/65">
+                        Get launch updates and be among the first to enter the community.
+                      </p>
+                    </div>
+
+                    <div class="space-y-3">
+                      <UInput
+                        v-model="email"
+                        size="xl"
+                        type="email"
+                        placeholder="Enter your email"
+                        class="w-full"
+                      />
+
+                      <UButton
+                        block
+                        size="xl"
+                        color="primary"
+                        :loading="loading"
+                        @click="joinWaitlist"
+                      >
+                        Join Waitlist
+                      </UButton>
+                    </div>
+
+                    <p v-if="message" class="text-sm text-white/70">
+                      {{ message }}
+                    </p>
+
+                    <div class="rounded-2xl border border-white/10 bg-black/25 p-4">
+                      <p class="text-sm text-white/55">Coming soon</p>
+                      <p class="mt-2 text-sm leading-6 text-white/75">
+                        Profiles, community posts, care knowledge, and a warm place built
+                        just for doxies and the people who love them.
+                      </p>
+                    </div>
+                  </div>
+                </UCard>
               </div>
             </div>
           </div>
         </div>
-      </section>
 
-      <!-- Footer -->
-      <footer class="relative border-t border-white/10">
-        <div
-          class="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-8 text-sm text-white/55 md:flex-row md:items-center md:justify-between"
+        <!-- Footer -->
+        <footer
+          class="flex flex-col gap-3 border-t border-white/10 pt-5 text-sm text-white/55 md:flex-row md:items-center md:justify-between"
         >
-          <p>© 2026 Doxieland. A coming soon community for dachshund lovers.</p>
+          <p>© 2026 Doxieland. Coming soon for dachshund lovers.</p>
 
           <div class="flex gap-6">
-            <a class="transition hover:text-white">About</a>
-            <a class="transition hover:text-white">Waitlist</a>
-            <a class="transition hover:text-white">Privacy</a>
+            <a href="#" class="transition hover:text-white">About</a>
+            <a href="#" class="transition hover:text-white">Waitlist</a>
+            <a href="#" class="transition hover:text-white">Privacy</a>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </section>
     </main>
   </UApp>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const email = ref('')
+const loading = ref(false)
+const message = ref('')
+
+const joinWaitlist = async () => {
+  if (!email.value) {
+    message.value = 'Please enter your email.'
+    return
+  }
+
+  loading.value = true
+  message.value = ''
+
+  try {
+    // TODO: replace with your real API request
+    await new Promise(resolve => setTimeout(resolve, 800))
+
+    message.value = 'Thanks! You’ve been added to the waitlist.'
+    email.value = ''
+  } catch (error) {
+    message.value = 'Something went wrong. Please try again later.'
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <style scoped>
