@@ -45,7 +45,7 @@
                 class="max-w-4xl text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl"
               >
                 🐕 A warm new home for
-                <span class="bg-gradient-to-r from-amber-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent">
+                <span class="bg-linear-to-r from-amber-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent">
                   every doxie story
                 </span>
               </h1>
@@ -81,7 +81,7 @@
 
             <!-- Right -->
             <div class="relative">
-              <div class="absolute -inset-6 rounded-[2rem] bg-white/5 blur-2xl"></div>
+              <div class="absolute -inset-6 rounded-4xl bg-white/5 blur-2xl"></div>
 
               <UCard class="relative border-white/10 bg-white/8 backdrop-blur-xl">
                 <template #header>
