@@ -94,5 +94,11 @@ Thumbs.db
 *.sln
 *.sw?
 
+# -----------------
+
+# Modify
+
+# -----------------
+
 components.d.ts
 .auto-imports.d.ts
