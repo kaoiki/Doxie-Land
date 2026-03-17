@@ -1,5 +1,46 @@
 <template>
   <UApp>
+    <!-- Toast -->
+    <transition name="toast-fade">
+      <div
+        v-if="toast.show"
+        class="fixed top-5 right-5 z-50 w-[320px] rounded-2xl border px-4 py-3 shadow-2xl backdrop-blur-xl"
+        :class="toast.type === 'success'
+          ? 'border-emerald-400/30 bg-emerald-500/15 text-emerald-100'
+          : 'border-red-400/30 bg-red-500/15 text-red-100'"
+      >
+        <div class="flex items-start gap-3">
+          <div
+            class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+            :class="toast.type === 'success'
+              ? 'bg-emerald-400/20 text-emerald-300'
+              : 'bg-red-400/20 text-red-300'"
+          >
+            <UIcon
+              :name="toast.type === 'success' ? 'i-mdi-check-circle' : 'i-mdi-alert-circle'"
+              class="text-lg"
+            />
+          </div>
+
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-semibold">
+              {{ toast.title }}
+            </p>
+            <p class="mt-1 text-sm opacity-90">
+              {{ toast.description }}
+            </p>
+          </div>
+
+          <button
+            class="text-white/60 transition hover:text-white"
+            @click="toast.show = false"
+          >
+            <UIcon name="i-mdi-close" class="text-lg" />
+          </button>
+        </div>
+      </div>
+    </transition>
+
     <main class="relative min-h-screen overflow-hidden bg-[#070b14] text-white">
       <!-- Animated colorful background -->
       <div class="pointer-events-none absolute inset-0 overflow-hidden">
@@ -86,12 +127,14 @@
                     </div>
 
                     <div class="space-y-3">
+
                       <UInput
                         v-model="email"
                         size="xl"
                         type="email"
                         placeholder="Enter your email"
                         class="w-full"
+                        :class="emailError ? 'ring-2 ring-red-400 border-red-400' : ''"
                       />
 
                       <UButton
@@ -127,7 +170,7 @@
         <footer
           class="flex flex-col gap-3 border-t border-white/10 pt-5 text-sm text-white/55 md:flex-row md:items-center md:justify-between"
         >
-          <p>© 2026 Doxieland. Coming soon for dachshund lovers.</p>
+          <p>© 2026 Doxieland. Coming soon for dachshund lovers. Last Version: 0.1.2603171245.5</p>
 
           <div class="flex gap-6">
             <a href="#" class="transition hover:text-white">About</a>
@@ -142,14 +185,52 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { supabase } from './lib/supabase'
 
 const email = ref('')
 const loading = ref(false)
 const message = ref('')
+const emailError = ref(false)
+
+const toast = ref({
+  show: false,
+  type: 'error' as 'error' | 'success',
+  title: '',
+  description: ''
+})
+
+let toastTimer: ReturnType<typeof setTimeout> | null = null
+
+const showToast = (
+  type: 'error' | 'success',
+  title: string,
+  description: string
+) => {
+  toast.value = {
+    show: true,
+    type,
+    title,
+    description
+  }
+
+  if (toastTimer) {
+    clearTimeout(toastTimer)
+  }
+
+  toastTimer = setTimeout(() => {
+    toast.value.show = false
+  }, 2500)
+}
 
 const joinWaitlist = async () => {
-  if (!email.value) {
-    message.value = 'Please enter your email.'
+  if (!email.value.trim()) {
+    showToast('error', 'Email is required', 'Please enter your email address.')
+    return
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!emailRegex.test(email.value.trim())) {
+    showToast('error', 'Invalid email', 'Please enter a valid email address.')
     return
   }
 
@@ -157,13 +238,30 @@ const joinWaitlist = async () => {
   message.value = ''
 
   try {
-    // TODO: replace with your real API request
-    await new Promise(resolve => setTimeout(resolve, 800))
+    // coding here
+    //await new Promise(resolve => setTimeout(resolve, 800))
+    const { error } = await supabase
+    .from('waitlist')
+    .insert([
+      {
+        email: email.value.trim()
+      }
+    ])
 
-    message.value = 'Thanks! You’ve been added to the waitlist.'
+    if (error) {
+      // ❗唯一约束（重复 email）
+      if (error.code === '23505') {
+        showToast('error', 'Already joined', 'This email is already on the waitlist.')
+        return
+      }
+
+      throw error
+    }
+
+    showToast('success', 'Success', 'Thanks! You’ve been added to the waitlist.')
     email.value = ''
   } catch (error) {
-    message.value = 'Something went wrong. Please try again later.'
+    showToast('error', 'Something went wrong', 'Please try again later.')
   } finally {
     loading.value = false
   }
@@ -262,5 +360,16 @@ const joinWaitlist = async () => {
   100% {
     transform: translate(-60px, -80px) scale(1.14);
   }
+}
+
+.toast-fade-enter-active,
+.toast-fade-leave-active {
+  transition: all 0.25s ease;
+}
+
+.toast-fade-enter-from,
+.toast-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px) translateX(10px);
 }
 </style>
