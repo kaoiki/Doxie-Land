@@ -1,4 +1,6 @@
 @import url("https://fonts.font.im/css?family=Kanit");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
 @import "tailwindcss";
 @import "@nuxt/ui";
 
@@ -8,4 +10,5 @@
 
 body {
   font-family: "Kanit", sans-serif;
+  margin: 0;
 }
