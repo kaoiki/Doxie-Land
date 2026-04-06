@@ -1,152 +1,215 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const mobileMenuOpen = ref(false)
+const route = useRoute()
+const router = useRouter()
+
+const isMobileMenuOpen = ref(false)
+const loginStatus = ref(false)
 
 const navItems = [
-  { label: 'Home', href: '#', active: true },
-  { label: 'Daily Logs', href: '#', active: false },
-  { label: 'Shop', href: '#', active: false },
-  { label: 'Services', href: '#', active: false },
-  { label: 'Community', href: '#', active: false }
+  { label: 'Home', to: '/' },
+  { label: 'Forum', to: '/forum' },
+  { label: 'Shop', to: '/shop' },
+  { label: 'AI Care', to: '/ai-care' },
+  { label: 'Knowledge', to: '/knowledge' },
+  { label: 'Profiles', to: '/profiles' }
 ]
 
+const readLoginStatus = () => {
+  loginStatus.value = localStorage.getItem('doxie_loginstatu') === 'true'
+}
+
+const isActive = (path: string) => {
+  return route.path === path
+}
+
 const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
 const closeMobileMenu = () => {
-  mobileMenuOpen.value = false
+  isMobileMenuOpen.value = false
 }
+
+const accountItems = computed(() => {
+  if (loginStatus.value) {
+    return [
+      [
+        {
+          label: 'Logout',
+          icon: 'i-lucide-log-out',
+          click: async () => {
+            localStorage.removeItem('doxie_loginstatu')
+            loginStatus.value = false
+            await router.push('/')
+          }
+        }
+      ]
+    ]
+  }
+
+  return [
+    [
+      {
+        label: 'Login',
+        icon: 'i-lucide-log-in',
+        to: '/login'
+      },
+      {
+        label: 'Register',
+        icon: 'i-lucide-user-plus',
+        to: '/register'
+      }
+    ]
+  ]
+})
+
+const handleLogout = async () => {
+  localStorage.removeItem('doxie_loginstatu')
+  loginStatus.value = false
+  closeMobileMenu()
+  await router.push('/')
+}
+
+onMounted(() => {
+  readLoginStatus()
+  window.addEventListener('storage', readLoginStatus)
+})
+
+defineExpose({
+  readLoginStatus
+})
 </script>
 
 <template>
-  <header
-    class="sticky top-0 z-50 border-b border-solid border-primary/10 bg-white backdrop-blur-md"
-  >
-    <div class="flex items-center justify-between whitespace-nowrap px-6 py-4 lg:px-20">
-      <div class="flex items-center gap-12">
-        <div class="flex items-center gap-3 text-primary">
-          <span
-            class="material-symbols-outlined text-4xl"
-            style="font-variation-settings: 'FILL' 1"
-          >
-            pets
-          </span>
-          <h2 class="text-slate-900 text-xl font-extrabold leading-tight tracking-tight">
-            Doxie Life
-          </h2>
+  <header class="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <RouterLink to="/" class="flex items-center gap-3" @click="closeMobileMenu">
+        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
+          <span class="material-symbols-outlined text-[24px] leading-none text-primary">pets</span>
         </div>
 
-        <nav class="hidden md:flex items-center gap-8">
-          <a
-            v-for="item in navItems"
-            :key="item.label"
-            :href="item.href"
-            :class="[
-              'text-sm font-semibold transition-colors',
-              item.active
-                ? 'text-primary'
-                : 'text-slate-700 hover:text-primary'
-            ]"
-          >
-            {{ item.label }}
-          </a>
-        </nav>
-      </div>
+        <div class="leading-tight">
+          <div class="text-lg font-extrabold tracking-tight text-slate-900">DoxieLand</div>
+          <div class="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Life &amp; Care</div>
+        </div>
+      </RouterLink>
 
-      <div class="flex flex-1 justify-end gap-4 items-center">
-        <label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64">
-          <div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
-            <div class="text-slate-400 flex bg-slate-100 items-center justify-center pl-3">
-              <span class="material-symbols-outlined text-xl">search</span>
-            </div>
-            <input
-              class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 focus:ring-0 h-full placeholder:text-slate-400 px-3 text-sm font-normal"
-              placeholder="Search boutique..."
+      <nav class="hidden items-center gap-8 md:flex">
+        <RouterLink
+          v-for="item in navItems"
+          :key="item.label"
+          :to="item.to"
+          class="text-sm font-semibold transition-colors"
+          :class="isActive(item.to) ? 'text-primary' : 'text-slate-700 hover:text-primary'"
+        >
+          {{ item.label }}
+        </RouterLink>
+      </nav>
+
+      <div class="hidden items-center gap-3 md:flex">
+        <UDropdownMenu
+          :items="accountItems"
+          :content="{
+            align: 'end',
+            side: 'bottom',
+            sideOffset: 14
+          }"
+          :ui="{
+            content: 'z-[120] w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl ring-0 outline-none',
+            item: 'rounded-xl text-slate-700 data-[highlighted]:bg-primary/10 data-[highlighted]:text-primary'
+          }"
+        >
+          <UButton
+            color="neutral"
+            variant="ghost"
+            class="group flex h-11 w-11 items-center justify-center rounded-full p-0 ring-1 ring-slate-200 hover:bg-transparent hover:ring-primary/40 active:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent"
+            :ui="{
+              base: 'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent'
+            }"
+          >
+            <img
+              v-if="loginStatus"
+              src="https://placehold.co/80x80/png"
+              alt="User avatar"
+              class="h-9 w-9 rounded-full object-cover"
             />
-          </div>
-        </label>
-
-        <div class="relative group hidden md:block">
-          <button
-            class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-700 hover:bg-primary/10 hover:text-primary transition-all"
-          >
-            <span class="material-symbols-outlined">person</span>
-          </button>
-
-          <div
-            class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-slate-200 py-1 z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200"
-          >
-            <a
-              class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-primary/10 hover:text-primary transition-colors"
-              href="#"
+            <span
+              v-else
+              class="material-symbols-outlined text-[24px] leading-none text-slate-700 transition-colors group-hover:text-primary"
             >
-              <span class="material-symbols-outlined text-xl">settings</span>
-              <span class="font-medium">Settings</span>
-            </a>
-
-            <a
-              class="flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-primary/10 hover:text-primary transition-colors"
-              href="#"
-            >
-              <span class="material-symbols-outlined text-xl">logout</span>
-              <span class="font-medium">Logout</span>
-            </a>
-          </div>
-        </div>
-
-        <button
-          class="hidden md:flex items-center justify-center rounded-lg h-10 w-10 bg-primary text-white hover:bg-primary/90 transition-all"
-        >
-          <span class="material-symbols-outlined">shopping_bag</span>
-        </button>
-
-        <button
-          class="flex md:hidden items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-700 hover:bg-primary/10 hover:text-primary transition-all"
-          type="button"
-          @click="toggleMobileMenu"
-        >
-          <span class="material-symbols-outlined">
-            {{ mobileMenuOpen ? 'close' : 'menu' }}
-          </span>
-        </button>
+              account_circle
+            </span>
+          </UButton>
+        </UDropdownMenu>
       </div>
+
+      <button
+        type="button"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:border-primary/30 hover:text-primary md:hidden"
+        @click="toggleMobileMenu"
+      >
+        <span class="material-symbols-outlined text-[26px]">
+          {{ isMobileMenuOpen ? 'close' : 'menu' }}
+        </span>
+      </button>
     </div>
 
     <div
-      v-if="mobileMenuOpen"
-      class="md:hidden border-t border-primary/10 bg-white px-6 pb-4"
+      v-if="isMobileMenuOpen"
+      class="border-t border-slate-200 bg-white px-4 py-4 md:hidden"
     >
-      <nav class="flex flex-col gap-2 pt-4">
-        <a
+      <nav class="flex flex-col gap-2">
+        <RouterLink
           v-for="item in navItems"
           :key="item.label"
-          :href="item.href"
-          :class="[
-            'rounded-lg px-4 py-3 text-sm font-semibold transition-colors',
-            item.active
-              ? 'bg-primary text-white'
-              : 'text-slate-700 hover:bg-primary/10 hover:text-primary'
-          ]"
+          :to="item.to"
+          class="rounded-xl px-4 py-3 text-sm font-semibold transition-colors"
+          :class="isActive(item.to) ? 'bg-primary text-white' : 'text-slate-700 hover:bg-primary/10 hover:text-primary'"
           @click="closeMobileMenu"
         >
           {{ item.label }}
-        </a>
+        </RouterLink>
       </nav>
 
-      <div class="flex items-center gap-3 pt-4">
-        <button
-          class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 text-slate-700 hover:bg-primary/10 hover:text-primary transition-all"
-        >
-          <span class="material-symbols-outlined">person</span>
-        </button>
+      <div class="mt-4 border-t border-slate-100 pt-4">
+        <div class="mb-3 px-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+          Account
+        </div>
 
-        <button
-          class="flex items-center justify-center rounded-lg h-10 w-10 bg-primary text-white hover:bg-primary/90 transition-all"
-        >
-          <span class="material-symbols-outlined">shopping_bag</span>
-        </button>
+        <div class="flex flex-col gap-2">
+          <RouterLink
+            v-if="!loginStatus"
+            to="/login"
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-primary/10 hover:text-primary"
+            @click="closeMobileMenu"
+          >
+            <span class="material-symbols-outlined text-[20px]">login</span>
+            <span>Login</span>
+          </RouterLink>
+
+          <RouterLink
+            v-if="!loginStatus"
+            to="/register"
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-primary/10 hover:text-primary"
+            @click="closeMobileMenu"
+          >
+            <span class="material-symbols-outlined text-[20px]">person_add</span>
+            <span>Register</span>
+          </RouterLink>
+
+          <button
+            v-if="loginStatus"
+            type="button"
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-primary/10 hover:text-primary"
+            @click="handleLogout"
+          >
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
   </header>

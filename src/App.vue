@@ -1,13 +1,3 @@
-<script setup>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
-import Home from './pages/index.vue'
-</script>
-
 <template>
-  <div class="text-slate-900" style="background-color: #f8f6f6;">
-    <Header />
-    <Home />
-    <Footer />
-  </div>
+  <RouterView />
 </template>
