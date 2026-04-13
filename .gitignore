@@ -103,3 +103,6 @@ Thumbs.db
 components.d.ts
 .auto-imports.d.ts
 auto-imports.d.ts
+
+# ✅ 允许手写声明文件
+!src/types/auto-imports.d.ts
