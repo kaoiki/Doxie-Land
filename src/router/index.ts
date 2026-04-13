@@ -8,6 +8,7 @@ import LoginView from '../pages/LoginView.vue'
 import RegisterView from '../pages/RegisterView.vue'
 import ForgotView from '../pages/ForgotView.vue'
 import ForumView from '../pages/ForumView.vue'
+import TopicDetailView from '../pages/TopicDetailView.vue'
 import ShopView from '../pages/ShopView.vue'
 import AICareView from '../pages/AICareView.vue'
 import KnowledgeView from '../pages/KnowledgeView.vue'
@@ -22,6 +23,7 @@ const router = createRouter({
       children: [
         { path: '', name: 'home', component: HomeView },
         { path: 'forum', name: 'forum', component: ForumView },
+        { path: 'forum/:id', name: 'topic-detail', component: TopicDetailView, props: true },
         { path: 'shop', name: 'shop', component: ShopView },
         { path: 'ai-care', name: 'ai-care', component: AICareView },
         { path: 'knowledge', name: 'knowledge', component: KnowledgeView },
