@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import doxieHero from '../assets/doxie-hero.png'
-import doxieSide from '../assets/doxie-side.png'
-import doxieCard1 from '../assets/doxie-card-1.png'
-import doxieCard2 from '../assets/doxie-card-2.png'
-import doxieBanner from '../assets/doxie-banner.png'
+import doxieHeroMain from '../assets/doxie-hero-main.jpg'
+import doxiePortraitSide from '../assets/doxie-portrait-side.jpg'
+import doxieForum from '../assets/doxie-forum.jpg'
+import doxieReviews from '../assets/doxie-reviews.jpg'
+import doxieAi from '../assets/doxie-ai.jpg'
+import doxieKnowledge from '../assets/doxie-knowledge.jpg'
+import doxieProfile from '../assets/doxie-profile.jpg'
+import doxieCommunity from '../assets/doxie-community.jpg'
+import doxiePractical from '../assets/doxie-practical.jpg'
+import doxieBanner from '../assets/doxie-banner.jpg'
 </script>
 
 <template>
@@ -14,7 +19,7 @@ import doxieBanner from '../assets/doxie-banner.png'
         <div class="h-full overflow-hidden rounded-3xl border border-green-200 shadow-sm">
           <div class="relative h-full min-h-[620px] lg:min-h-[700px]">
             <img
-              :src="doxieHero"
+              :src="doxieHeroMain"
               alt="Dachshund hero image"
               class="absolute inset-0 h-full w-full object-cover"
             />
@@ -107,7 +112,7 @@ import doxieBanner from '../assets/doxie-banner.png'
         <div class="grid h-full gap-6">
           <div class="overflow-hidden rounded-3xl border border-green-200 bg-white shadow-sm">
             <img
-              :src="doxieSide"
+              :src="doxiePortraitSide"
               alt="Dachshund portrait"
               class="h-64 w-full object-cover"
             />
@@ -196,7 +201,7 @@ import doxieBanner from '../assets/doxie-banner.png'
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
-            :src="doxieCard1"
+            :src="doxieForum"
             alt="Forum section"
             class="h-44 w-full object-cover"
           />
@@ -218,7 +223,7 @@ import doxieBanner from '../assets/doxie-banner.png'
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
-            :src="doxieCard2"
+            :src="doxieReviews"
             alt="Reviews section"
             class="h-44 w-full object-cover"
           />
@@ -240,7 +245,7 @@ import doxieBanner from '../assets/doxie-banner.png'
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
-            :src="doxieCard1"
+            :src="doxieAi"
             alt="AI Care section"
             class="h-44 w-full object-cover"
           />
@@ -262,7 +267,7 @@ import doxieBanner from '../assets/doxie-banner.png'
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
-            :src="doxieCard2"
+            :src="doxieKnowledge"
             alt="Knowledge section"
             class="h-44 w-full object-cover"
           />
@@ -284,7 +289,7 @@ import doxieBanner from '../assets/doxie-banner.png'
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
-            :src="doxieSide"
+            :src="doxieProfile"
             alt="Dog profile section"
             class="h-44 w-full object-cover"
           />
@@ -368,8 +373,8 @@ import doxieBanner from '../assets/doxie-banner.png'
         <div class="grid gap-6 sm:grid-cols-2">
           <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
             <img
-              :src="doxieCard1"
-              alt="Dachshund moment"
+              :src="doxieCommunity"
+              alt="Dachshund community moment"
               class="h-56 w-full object-cover"
             />
             <div class="p-5">
@@ -382,8 +387,8 @@ import doxieBanner from '../assets/doxie-banner.png'
 
           <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
             <img
-              :src="doxieCard2"
-              alt="Dachshund lifestyle"
+              :src="doxiePractical"
+              alt="Dachshund practical reviews"
               class="h-56 w-full object-cover"
             />
             <div class="p-5">
