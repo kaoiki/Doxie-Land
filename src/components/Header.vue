@@ -9,6 +9,12 @@ const router = useRouter()
 const isMobileMenuOpen = ref(false)
 const loginStatus = ref(false)
 
+const userAvatar = computed(() => {
+  const avatar = localStorage.getItem('doxie_avatar')
+  if (!avatar || avatar.includes('default.webp') || avatar.includes('placehold.co')) return ''
+  return avatar
+})
+
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Forum', to: '/forum' },
@@ -134,8 +140,8 @@ defineExpose({
             }"
           >
             <img
-              v-if="loginStatus"
-              src="https://placehold.co/80x80/png"
+              v-if="loginStatus && userAvatar"
+              :src="userAvatar"
               alt="User avatar"
               class="h-9 w-9 rounded-full object-cover"
             />
@@ -143,7 +149,7 @@ defineExpose({
               v-else
               class="material-symbols-outlined text-[24px] leading-none text-slate-700 transition-colors group-hover:text-primary"
             >
-              account_circle
+              {{ loginStatus ? 'pets' : 'account_circle' }}
             </span>
           </UButton>
         </UDropdownMenu>
