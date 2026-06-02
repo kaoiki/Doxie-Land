@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { httpRequest } from '../utils/http'
+import { httpRequest, getToken } from '../utils/http'
 
 type ApiPostItem = {
   id: string
@@ -28,10 +28,7 @@ const router = useRouter()
 const toast = useToast()
 
 function getLoginStatus() {
-  return (
-    localStorage.getItem('doxie_loginstatus') === 'true' ||
-    localStorage.getItem('doxie_loginStatus') === 'true'
-  )
+  return !!getToken()
 }
 
 const isLoggedIn = ref(getLoginStatus())

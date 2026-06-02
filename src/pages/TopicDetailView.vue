@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onBeforeUnmount, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { httpRequest } from '../utils/http'
+import { httpRequest, getToken } from '../utils/http'
 
 type ApiPostDetail = {
   id: string
@@ -100,10 +100,7 @@ const imageUploading = ref(false)
 const deletingImageId = ref('')
 
 function getLoginStatus() {
-  return (
-    localStorage.getItem('doxie_loginstatus') === 'true' ||
-    localStorage.getItem('doxie_loginStatus') === 'true'
-  )
+  return !!getToken()
 }
 
 function getCurrentUserId() {
@@ -329,6 +326,14 @@ function goBack() {
 }
 
 function toggleComposer() {
+  if (!getLoginStatus()) {
+    toast.add({
+      title: 'Login required',
+      description: 'Please log in before writing a comment.',
+      color: 'error'
+    })
+    return
+  }
   showComposer.value = !showComposer.value
 }
 
