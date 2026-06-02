@@ -94,6 +94,8 @@ const commentLoading = ref(false)
 const commentSubmitting = ref(false)
 const commentDeletingId = ref('')
 
+const showLoginRequiredModal = ref(false)
+
 const imageInputRef = ref<HTMLInputElement | null>(null)
 const pendingImages = ref<PendingImage[]>([])
 const imageUploading = ref(false)
@@ -327,14 +329,24 @@ function goBack() {
 
 function toggleComposer() {
   if (!getLoginStatus()) {
-    toast.add({
-      title: 'Login required',
-      description: 'Please log in before writing a comment.',
-      color: 'error'
-    })
+    showLoginRequiredModal.value = true
     return
   }
   showComposer.value = !showComposer.value
+}
+
+function closeLoginRequiredModal() {
+  showLoginRequiredModal.value = false
+}
+
+function goToLogin() {
+  showLoginRequiredModal.value = false
+  router.push('/login')
+}
+
+function goToRegister() {
+  showLoginRequiredModal.value = false
+  router.push('/register')
 }
 
 function openImageUploader() {
@@ -428,11 +440,7 @@ function removePendingImage(id: string) {
 
 async function submitComment() {
   if (!getLoginStatus()) {
-    toast.add({
-      title: 'Login required',
-      description: 'Please log in before replying.',
-      color: 'error'
-    })
+    showLoginRequiredModal.value = true
     return
   }
 
@@ -1129,5 +1137,40 @@ onBeforeUnmount(() => {
         </div>
       </template>
     </UModal>
+
+    <div
+      v-if="showLoginRequiredModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 px-4"
+    >
+      <div class="w-full max-w-md rounded-[28px] bg-white p-6 shadow-[0_20px_80px_rgba(15,23,42,0.25)] sm:p-7">
+        <div class="text-center">
+          <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-100">
+            <UIcon name="i-lucide-lock" class="h-7 w-7 text-amber-600" />
+          </div>
+
+          <h2 class="mt-4 text-2xl font-black text-slate-900">Login required</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-500">
+            Browsing is open, but writing a comment requires registration or login first.
+          </p>
+        </div>
+
+        <div class="mt-6 flex justify-center gap-3">
+          <UButton variant="ghost" class="text-gray-400 hover:text-gray-600" @click="closeLoginRequiredModal">
+            Later
+          </UButton>
+          <UButton
+            color="neutral"
+            variant="soft"
+            icon="i-heroicons-arrow-right-on-rectangle"
+            @click="goToLogin"
+          >
+            Login
+          </UButton>
+          <UButton icon="i-lucide-user-plus" @click="goToRegister">
+            Register
+          </UButton>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
