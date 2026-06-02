@@ -96,10 +96,20 @@ const commentDeletingId = ref('')
 
 const showLoginRequiredModal = ref(false)
 
+const previewImageUrl = ref('')
+
 const imageInputRef = ref<HTMLInputElement | null>(null)
 const pendingImages = ref<PendingImage[]>([])
 const imageUploading = ref(false)
 const deletingImageId = ref('')
+
+function openPreview(url: string) {
+  previewImageUrl.value = url
+}
+
+function closePreview() {
+  previewImageUrl.value = ''
+}
 
 function getLoginStatus() {
   return !!getToken()
@@ -463,7 +473,8 @@ async function submitComment() {
       method: 'POST',
       body: {
         post_id: postId.value,
-        content: commentInput.value.trim()
+        content: commentInput.value.trim(),
+        user_id: localStorage.getItem('doxie_uid') || ''
       },
       skipLoading: false
     })
@@ -781,7 +792,7 @@ onBeforeUnmount(() => {
                   v-if="slot.type === 'image'"
                   class="group relative overflow-hidden rounded-2xl border border-slate-200"
                 >
-                  <img :src="slot.image.url" alt="post image" class="h-44 w-full object-cover" />
+                  <img :src="slot.image.url" alt="post image" class="h-44 w-full cursor-pointer object-cover" @click="openPreview(slot.image.url)" />
 
                   <div
                     v-if="post.isMine"
@@ -1170,6 +1181,28 @@ onBeforeUnmount(() => {
             Register
           </UButton>
         </div>
+      </div>
+    </div>
+
+    <!-- Image preview overlay -->
+    <div
+      v-if="previewImageUrl"
+      class="fixed inset-0 z-[300] flex items-center justify-center bg-black/80 px-4"
+      @click="closePreview"
+    >
+      <div class="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center">
+        <img
+          :src="previewImageUrl"
+          alt="preview"
+          class="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
+          @click.stop
+        />
+        <button
+          class="absolute -right-3 -top-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-800 shadow-lg transition hover:bg-slate-100"
+          @click="closePreview"
+        >
+          <UIcon name="i-lucide-x" class="h-5 w-5" />
+        </button>
       </div>
     </div>
   </main>

@@ -215,7 +215,8 @@ async function submitPost() {
       method: 'POST',
       body: {
         title: createTitle.value.trim(),
-        content: createContent.value.trim()
+        content: createContent.value.trim(),
+        user_id: localStorage.getItem('doxie_uid') || ''
       },
       skipLoading: true
     })
