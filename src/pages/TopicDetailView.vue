@@ -450,8 +450,7 @@ async function submitComment() {
       method: 'POST',
       body: {
         post_id: postId.value,
-        content: commentInput.value.trim(),
-        user_id: userId
+        content: commentInput.value.trim()
       },
       skipLoading: false
     })

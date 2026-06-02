@@ -1,6 +1,8 @@
 import { API_BASE_URL, APP_CODE } from '../config/env'
 import { useGlobalLoading } from '../componables/useGlobalLoading'
 
+const TOKEN_KEY = 'doxie_token'
+
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
 
 type RequestOptions = {
@@ -8,6 +10,18 @@ type RequestOptions = {
   body?: unknown
   headers?: Record<string, string>
   skipLoading?: boolean
+}
+
+export function getToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY)
+}
+
+export function setToken(token: string) {
+  localStorage.setItem(TOKEN_KEY, token)
+}
+
+export function clearToken() {
+  localStorage.removeItem(TOKEN_KEY)
 }
 
 function buildUrl(path: string) {
@@ -18,6 +32,11 @@ function buildHeaders(body?: unknown, customHeaders?: Record<string, string>) {
   const baseHeaders: Record<string, string> = {
     'x-app-code': APP_CODE,
     ...(customHeaders || {})
+  }
+
+  const token = getToken()
+  if (token) {
+    baseHeaders['Authorization'] = `Bearer ${token}`
   }
 
   if (!(body instanceof FormData)) {

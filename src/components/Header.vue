@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { getToken, clearToken } from '../utils/http'
 
 const route = useRoute()
 const router = useRouter()
@@ -18,7 +19,7 @@ const navItems = [
 ]
 
 const readLoginStatus = () => {
-  loginStatus.value = localStorage.getItem('doxie_loginstatu') === 'true'
+  loginStatus.value = !!getToken()
 }
 
 const isActive = (path: string) => {
@@ -41,7 +42,8 @@ const accountItems = computed(() => {
           label: 'Logout',
           icon: 'i-lucide-log-out',
           click: async () => {
-            localStorage.removeItem('doxie_loginstatu')
+            clearToken()
+            localStorage.removeItem('doxie_uid')
             loginStatus.value = false
             await router.push('/')
           }
@@ -67,7 +69,8 @@ const accountItems = computed(() => {
 })
 
 const handleLogout = async () => {
-  localStorage.removeItem('doxie_loginstatu')
+  clearToken()
+  localStorage.removeItem('doxie_uid')
   loginStatus.value = false
   closeMobileMenu()
   await router.push('/')

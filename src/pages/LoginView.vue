@@ -1,11 +1,79 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { httpRequest, setToken } from '../utils/http'
+
+const router = useRouter()
+const toast = useToast()
 
 const email = ref('')
 const password = ref('')
 const showPassword = ref(false)
+const loading = ref(false)
+const errorMsg = ref('')
 
 const passwordType = computed(() => (showPassword.value ? 'text' : 'password'))
+
+async function handleLogin() {
+  errorMsg.value = ''
+
+  if (!email.value.trim()) {
+    errorMsg.value = 'Please enter your email.'
+    return
+  }
+  if (!password.value) {
+    errorMsg.value = 'Please enter your password.'
+    return
+  }
+
+  loading.value = true
+
+  try {
+    const res = await httpRequest<{
+      code: number
+      message: string
+      data: {
+        user_id: string
+        email: string
+        nickname: string
+        avatar: string
+        token: string
+        expires_at: string
+      }
+    }>('/api/auth/login', {
+      method: 'POST',
+      body: {
+        email: email.value.trim(),
+        password: password.value
+      },
+      skipLoading: true
+    })
+
+    const data = res.data
+    setToken(data.token)
+    localStorage.setItem('doxie_uid', data.user_id)
+    localStorage.setItem('doxie_nickname', data.nickname)
+    localStorage.setItem('doxie_avatar', data.avatar)
+
+    toast.add({
+      title: 'Welcome back!',
+      description: 'You have logged in successfully.',
+      color: 'success'
+    })
+
+    await router.push('/')
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Login failed. Please try again.'
+    errorMsg.value = message
+    toast.add({
+      title: 'Login failed',
+      description: message,
+      color: 'error'
+    })
+  } finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -28,7 +96,7 @@ const passwordType = computed(() => (showPassword.value ? 'text' : 'password'))
             <p class="mt-2 text-slate-500">Welcome back to DoxieLand.</p>
           </div>
 
-          <form class="space-y-5">
+          <form class="space-y-5" @submit.prevent="handleLogin">
             <div>
               <label class="mb-2 block text-sm font-medium text-slate-700">Email</label>
               <UInput
@@ -95,12 +163,17 @@ const passwordType = computed(() => (showPassword.value ? 'text' : 'password'))
               </UInput>
             </div>
 
+            <p v-if="errorMsg" class="text-sm font-semibold text-rose-500">
+              {{ errorMsg }}
+            </p>
+
             <UButton
               type="submit"
               size="xl"
               block
               color="success"
               class="justify-center font-bold"
+              :loading="loading"
             >
               Sign In
             </UButton>
