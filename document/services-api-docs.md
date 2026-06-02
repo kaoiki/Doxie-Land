@@ -48,8 +48,10 @@
 | `veterinary` | 兽医咨询 |
 | `boarding` | 宠物寄养 |
 | `grooming` | 洗澡美容 |
+| `training` | 宠物训练 |
 | `lost_found` | 寻狗/捡狗 |
 | `meetup` | 狗友组局 |
+| `pet_trading` | 宠物交易 |
 | `other` | 其它 |
 
 **费用类型 (fee_type)**

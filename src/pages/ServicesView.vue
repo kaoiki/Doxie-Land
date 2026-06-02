@@ -38,8 +38,10 @@ const CATEGORIES = [
   { value: 'veterinary', label: 'Veterinary', color: 'bg-red-100 text-red-700' },
   { value: 'boarding', label: 'Boarding', color: 'bg-blue-100 text-blue-700' },
   { value: 'grooming', label: 'Grooming', color: 'bg-purple-100 text-purple-700' },
+  { value: 'training', label: 'Training', color: 'bg-cyan-100 text-cyan-700' },
   { value: 'lost_found', label: 'Lost & Found', color: 'bg-orange-100 text-orange-700' },
   { value: 'meetup', label: 'Meetup', color: 'bg-pink-100 text-pink-700' },
+  { value: 'pet_trading', label: 'Pet Trading', color: 'bg-yellow-100 text-yellow-700' },
   { value: 'other', label: 'Other', color: 'bg-slate-100 text-slate-700' }
 ]
 

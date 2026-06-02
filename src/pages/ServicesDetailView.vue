@@ -5,7 +5,8 @@ import { httpRequest, getToken } from '../utils/http'
 
 const CATEGORY_LABELS: Record<string, string> = {
   walking: 'Walking', veterinary: 'Veterinary', boarding: 'Boarding',
-  grooming: 'Grooming', lost_found: 'Lost & Found', meetup: 'Meetup', other: 'Other'
+  grooming: 'Grooming', training: 'Training', lost_found: 'Lost & Found',
+  meetup: 'Meetup', pet_trading: 'Pet Trading', other: 'Other'
 }
 const FEE_LABELS: Record<string, string> = { free: 'Free', negotiable: 'Negotiable', paid: 'Paid' }
 
