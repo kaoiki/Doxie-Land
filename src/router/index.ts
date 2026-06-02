@@ -15,6 +15,7 @@ import AICareView from '../pages/AICareView.vue'
 import KnowledgeView from '../pages/KnowledgeView.vue'
 import ServicesView from '../pages/ServicesView.vue'
 import ServicesDetailView from '../pages/ServicesDetailView.vue'
+import SettingsView from '../pages/SettingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +33,7 @@ const router = createRouter({
         { path: 'knowledge', name: 'knowledge', component: KnowledgeView },
         { path: 'services', name: 'services', component: ServicesView },
         { path: 'services/:id', name: 'service-detail', component: ServicesDetailView, props: true },
+        { path: 'settings', name: 'settings', component: SettingsView },
       ]
     },
     {

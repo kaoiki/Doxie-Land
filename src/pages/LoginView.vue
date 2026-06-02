@@ -54,6 +54,7 @@ async function handleLogin() {
     localStorage.setItem('doxie_uid', data.user_id)
     localStorage.setItem('doxie_nickname', data.nickname)
     localStorage.setItem('doxie_avatar', data.avatar)
+    localStorage.setItem('doxie_email', data.email)
 
     toast.add({
       title: 'Welcome back!',

@@ -45,6 +45,11 @@ const accountItems = computed(() => {
     return [
       [
         {
+          label: 'Settings',
+          icon: 'i-lucide-settings',
+          to: '/settings'
+        },
+        {
           label: 'Logout',
           icon: 'i-lucide-log-out',
           onSelect: async () => {
@@ -207,6 +212,16 @@ defineExpose({
           >
             <span class="material-symbols-outlined text-[20px]">person_add</span>
             <span>Register</span>
+          </RouterLink>
+
+          <RouterLink
+            v-if="loginStatus"
+            to="/settings"
+            class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-primary/10 hover:text-primary"
+            @click="closeMobileMenu"
+          >
+            <span class="material-symbols-outlined text-[20px]">settings</span>
+            <span>Settings</span>
           </RouterLink>
 
           <button
