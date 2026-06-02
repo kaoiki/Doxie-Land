@@ -54,8 +54,6 @@ const toast = useToast()
 
 function getUserId() { return localStorage.getItem('doxie_uid') || '' }
 
-const isLoggedIn = ref(!!getToken())
-
 const serviceList = ref<ServiceItem[]>([])
 const page = ref(1)
 const pageSize = ref(12)

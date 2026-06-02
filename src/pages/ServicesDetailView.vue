@@ -24,7 +24,6 @@ const svc = ref({
 })
 const serviceImages = ref<Array<{ id: string; url: string }>>([])
 const detailLoading = ref(false)
-const isLoggedIn = ref(!!getToken())
 const showContact = ref(false)
 const previewImageUrl = ref('')
 
