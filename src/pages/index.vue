@@ -99,8 +99,8 @@ import doxieBanner from '../assets/doxie-banner.jpg'
                   <span
                     class="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur"
                   >
-                    <UIcon name="i-lucide-id-card" class="h-4 w-4" />
-                    Dog Profile
+                    <UIcon name="i-lucide-handshake" class="h-4 w-4" />
+                    Services
                   </span>
                 </div>
               </div>
@@ -224,7 +224,7 @@ import doxieBanner from '../assets/doxie-banner.jpg'
         >
           <img
             :src="doxieReviews"
-            alt="Reviews section"
+            alt="Shop reviews section"
             class="h-44 w-full object-cover"
           />
           <div class="p-5">
@@ -285,12 +285,12 @@ import doxieBanner from '../assets/doxie-banner.jpg'
         </RouterLink>
 
         <RouterLink
-          to="/dog-profile"
+          to="/services"
           class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-green-300 hover:shadow-md"
         >
           <img
             :src="doxieProfile"
-            alt="Dog profile section"
+            alt="Community services section"
             class="h-44 w-full object-cover"
           />
           <div class="p-5">
@@ -299,9 +299,9 @@ import doxieBanner from '../assets/doxie-banner.jpg'
             >
               <UIcon name="i-lucide-id-card" class="h-5 w-5" />
             </div>
-            <h3 class="text-lg font-bold text-slate-900">Dog Profile</h3>
+            <h3 class="text-lg font-bold text-slate-900">Services</h3>
             <p class="mt-2 text-sm leading-6 text-slate-600">
-              Build a profile and keep track of life records over time.
+              Find or offer walking, vet care, boarding and more from the community.
             </p>
           </div>
         </RouterLink>
@@ -418,8 +418,8 @@ import doxieBanner from '../assets/doxie-banner.jpg'
               </h3>
 
               <p class="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
-                Browse the forum, create your account, start your dog profile, and gradually fill in reviews,
-                notes, and daily records at your own pace.
+                Browse the forum, create your account, explore services, write reviews,
+                and find helpful knowledge at your own pace.
               </p>
             </div>
           </div>

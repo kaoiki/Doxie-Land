@@ -154,7 +154,7 @@ async function fetchList(targetPage = 1) {
 }
 
 function openDetail(id: string) {
-  router.push(`/shop/${id}`)
+  router.push(`/reviews/${id}`)
 }
 
 function goPrev() {
@@ -244,7 +244,7 @@ async function submitReview() {
     })
 
     closeCreateModal()
-    await router.push(`/shop/${res.data.id}`)
+    await router.push(`/reviews/${res.data.id}`)
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Failed to create review.'
     createError.value = message

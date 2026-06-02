@@ -18,7 +18,7 @@ const userAvatar = computed(() => {
 const navItems = [
   { label: 'Home', to: '/' },
   { label: 'Forum', to: '/forum' },
-  { label: 'Shop', to: '/shop' },
+  { label: 'Reviews', to: '/reviews' },
   { label: 'AI Care', to: '/ai-care' },
   { label: 'Knowledge', to: '/knowledge' },
   { label: 'Services', to: '/services' }

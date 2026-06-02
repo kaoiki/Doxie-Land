@@ -9,8 +9,8 @@ import RegisterView from '../pages/RegisterView.vue'
 import ForgotView from '../pages/ForgotView.vue'
 import ForumView from '../pages/ForumView.vue'
 import TopicDetailView from '../pages/TopicDetailView.vue'
-import ShopView from '../pages/ShopView.vue'
-import ShopDetailView from '../pages/ShopDetailView.vue'
+import ReviewsView from '../pages/ReviewsView.vue'
+import ReviewsDetailView from '../pages/ReviewsDetailView.vue'
 import AICareView from '../pages/AICareView.vue'
 import KnowledgeView from '../pages/KnowledgeView.vue'
 import ServicesView from '../pages/ServicesView.vue'
@@ -27,8 +27,8 @@ const router = createRouter({
         { path: '', name: 'home', component: HomeView },
         { path: 'forum', name: 'forum', component: ForumView },
         { path: 'forum/:id', name: 'topic-detail', component: TopicDetailView, props: true },
-        { path: 'shop', name: 'shop', component: ShopView },
-        { path: 'shop/:id', name: 'shop-detail', component: ShopDetailView, props: true },
+        { path: 'reviews', name: 'reviews', component: ReviewsView },
+        { path: 'reviews/:id', name: 'review-detail', component: ReviewsDetailView, props: true },
         { path: 'ai-care', name: 'ai-care', component: AICareView },
         { path: 'knowledge', name: 'knowledge', component: KnowledgeView },
         { path: 'services', name: 'services', component: ServicesView },

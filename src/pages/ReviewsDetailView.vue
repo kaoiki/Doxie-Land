@@ -201,7 +201,7 @@ function closePreview() {
 }
 
 function goBack() {
-  router.push('/shop')
+  router.push('/reviews')
 }
 
 // Image upload
@@ -346,7 +346,7 @@ async function deleteReview() {
       skipLoading: false
     })
     toast.add({ title: 'Deleted', description: 'Review removed.', color: 'success' })
-    await router.push('/shop')
+    await router.push('/reviews')
   } catch (error) {
     toast.add({
       title: 'Delete failed',
