@@ -21,7 +21,7 @@ const navItems = [
   { label: 'Shop', to: '/shop' },
   { label: 'AI Care', to: '/ai-care' },
   { label: 'Knowledge', to: '/knowledge' },
-  { label: 'Profiles', to: '/profiles' }
+  { label: 'Services', to: '/services' }
 ]
 
 const readLoginStatus = () => {

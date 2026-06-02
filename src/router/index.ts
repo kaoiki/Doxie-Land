@@ -13,7 +13,8 @@ import ShopView from '../pages/ShopView.vue'
 import ShopDetailView from '../pages/ShopDetailView.vue'
 import AICareView from '../pages/AICareView.vue'
 import KnowledgeView from '../pages/KnowledgeView.vue'
-import ProfilesView from '../pages/ProfilesView.vue'
+import ServicesView from '../pages/ServicesView.vue'
+import ServicesDetailView from '../pages/ServicesDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -29,7 +30,8 @@ const router = createRouter({
         { path: 'shop/:id', name: 'shop-detail', component: ShopDetailView, props: true },
         { path: 'ai-care', name: 'ai-care', component: AICareView },
         { path: 'knowledge', name: 'knowledge', component: KnowledgeView },
-        { path: 'profiles', name: 'profiles', component: ProfilesView }
+        { path: 'services', name: 'services', component: ServicesView },
+        { path: 'services/:id', name: 'service-detail', component: ServicesDetailView, props: true },
       ]
     },
     {
