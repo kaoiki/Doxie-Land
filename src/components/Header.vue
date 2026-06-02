@@ -41,7 +41,7 @@ const accountItems = computed(() => {
         {
           label: 'Logout',
           icon: 'i-lucide-log-out',
-          click: async () => {
+          onSelect: async () => {
             clearToken()
             localStorage.removeItem('doxie_uid')
             loginStatus.value = false
