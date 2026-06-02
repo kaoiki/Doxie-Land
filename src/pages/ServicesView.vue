@@ -51,6 +51,10 @@ const FEE_LABELS: Record<string, string> = {
   paid: 'Paid'
 }
 
+const CATEGORY_MAP = Object.fromEntries(
+  CATEGORIES.filter(c => c.value).map(c => [c.value, { label: c.label, color: c.color }])
+)
+
 const router = useRouter()
 const toast = useToast()
 
@@ -272,6 +276,13 @@ onMounted(() => fetchList())
         <div class="flex min-h-[180px] flex-col justify-between p-5">
           <div>
             <div class="mb-3 flex flex-wrap gap-2">
+              <span
+                v-if="CATEGORY_MAP[svc.category]"
+                :class="CATEGORY_MAP[svc.category].color"
+                class="rounded-full px-2.5 py-1 text-[11px] font-bold"
+              >
+                {{ CATEGORY_MAP[svc.category].label }}
+              </span>
               <span class="rounded-full bg-green-100 px-2.5 py-1 text-[11px] font-bold text-green-700">
                 {{ svc.feeLabel }}
               </span>
