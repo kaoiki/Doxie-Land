@@ -21,8 +21,11 @@ const serviceId = computed(() => String(route.params.id ?? ''))
 const svc = ref({
   id: '', user_id: '', nickname: '', avatar: '', category: '', title: '', description: '',
   contact_phone: '', contact_wechat: '', service_area: '', available_time: '', fee_type: '',
-  is_verified: false, provider_image: '', is_owner: false, createdAt: ''
+  is_verified: false, provider_image: '', is_owner: false, createdAt: '',
+  likeCount: 0, dislikeCount: 0
 })
+const userVote = ref(0)
+const voteLoading = ref(false)
 const serviceImages = ref<Array<{ id: string; url: string }>>([])
 const detailLoading = ref(false)
 const showContact = ref(false)
@@ -62,8 +65,10 @@ async function fetchDetail() {
       contact_wechat: item.contact_wechat || '', service_area: item.service_area || '',
       available_time: item.available_time || '', fee_type: item.fee_type || 'free',
       is_verified: item.is_verified || false, provider_image: item.provider_image || '',
-      is_owner: !!uid && item.user_id === uid, createdAt: formatDate(item.created_at)
+      is_owner: !!uid && item.user_id === uid, createdAt: formatDate(item.created_at),
+      likeCount: item.like_count || 0, dislikeCount: item.dislike_count || 0
     }
+    userVote.value = item.user_vote || 0
     serviceImages.value = (item.service_images || []).map((img: any) => ({ id: img.id, url: img.url }))
     showContact.value = !!(getToken() && (item.contact_phone || item.contact_wechat))
   } catch (e) {
@@ -76,6 +81,22 @@ function goBack() { router.push('/services') }
 // Preview image
 function openPreview(url: string) { previewImageUrl.value = url }
 function closePreview() { previewImageUrl.value = '' }
+
+async function castVote(vote: number) {
+  if (!getToken()) { router.push('/login'); return }
+  if (vote === userVote.value) vote = 0
+  voteLoading.value = true
+  try {
+    const res = await httpRequest<{ code: number; data: { vote: number; like_count: number; dislike_count: number } }>(
+      `/api/services/${serviceId.value}/vote`, { method: 'POST', body: { vote }, skipLoading: true }
+    )
+    userVote.value = res.data.vote
+    svc.value.likeCount = res.data.like_count
+    svc.value.dislikeCount = res.data.dislike_count
+  } catch (e) {
+    toast.add({ title: 'Vote failed', description: e instanceof Error ? e.message : 'Failed.', color: 'error' })
+  } finally { voteLoading.value = false }
+}
 
 // Delete service
 async function deleteService() {
@@ -217,9 +238,30 @@ onBeforeUnmount(() => {
               </div>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap items-center gap-3">
             <span class="rounded-full bg-green-100 px-3 py-1.5 text-sm font-bold text-green-700">{{ FEE_LABELS[svc.fee_type] || svc.fee_type }}</span>
             <span class="rounded-full bg-violet-100 px-3 py-1.5 text-sm font-bold text-violet-700">{{ CATEGORY_LABELS[svc.category] || svc.category }}</span>
+            <div class="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm shadow-sm">
+              <button
+                class="flex items-center gap-1 font-bold transition"
+                :class="userVote === 1 ? 'text-green-600' : 'text-slate-400 hover:text-green-600'"
+                :disabled="voteLoading"
+                @click.stop="castVote(1)"
+              >
+                <UIcon :name="userVote === 1 ? 'i-lucide-thumbs-up' : 'i-lucide-thumbs-up'" class="h-4 w-4" />
+                {{ svc.likeCount }}
+              </button>
+              <span class="mx-1 text-slate-200">|</span>
+              <button
+                class="flex items-center gap-1 font-bold transition"
+                :class="userVote === -1 ? 'text-red-500' : 'text-slate-400 hover:text-red-500'"
+                :disabled="voteLoading"
+                @click.stop="castVote(-1)"
+              >
+                <UIcon :name="userVote === -1 ? 'i-lucide-thumbs-down' : 'i-lucide-thumbs-down'" class="h-4 w-4" />
+                {{ svc.dislikeCount }}
+              </button>
+            </div>
           </div>
         </div>
       </div>

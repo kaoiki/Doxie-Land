@@ -14,6 +14,8 @@ type ApiServiceItem = {
   fee_type: string
   is_verified: boolean
   provider_image: string | null
+  like_count: number
+  dislike_count: number
   created_at: string
 }
 
@@ -28,6 +30,8 @@ type ServiceItem = {
   feeLabel: string
   isVerified: boolean
   providerImage: string
+  likeCount: number
+  dislikeCount: number
   createdAt: string
   isMine: boolean
 }
@@ -110,6 +114,8 @@ function mapItem(item: ApiServiceItem): ServiceItem {
     feeLabel: FEE_LABELS[item.fee_type] || '免费',
     isVerified: item.is_verified || false,
     providerImage: item.provider_image || '',
+    likeCount: item.like_count || 0,
+    dislikeCount: item.dislike_count || 0,
     createdAt: formatDate(item.created_at),
     isMine: !!uid && item.user_id === uid
   }
@@ -299,9 +305,10 @@ onMounted(() => fetchList())
               <UIcon name="i-lucide-user" class="h-3.5 w-3.5" />
               <span>{{ svc.nickname }}</span>
             </div>
-            <div v-if="svc.serviceArea" class="flex items-center gap-1.5">
-              <UIcon name="i-lucide-map-pin" class="h-3.5 w-3.5" />
-              <span>{{ svc.serviceArea }}</span>
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1"><UIcon name="i-lucide-thumbs-up" class="h-3.5 w-3.5 text-green-600" /> {{ svc.likeCount }}</span>
+              <span class="flex items-center gap-1"><UIcon name="i-lucide-thumbs-down" class="h-3.5 w-3.5 text-red-500" /> {{ svc.dislikeCount }}</span>
+              <span v-if="svc.serviceArea" class="flex items-center gap-1"><UIcon name="i-lucide-map-pin" class="h-3.5 w-3.5" /> {{ svc.serviceArea }}</span>
             </div>
           </div>
         </div>
