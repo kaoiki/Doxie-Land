@@ -3,8 +3,14 @@ import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { httpRequest, getToken } from '../utils/http'
 
+const ADMIN_UID = 'f1ce03a5-4aa5-4531-b096-5798c25cc332'
+
 const router = useRouter()
 const toast = useToast()
+
+const isAdmin = computed(() => {
+  return localStorage.getItem('doxie_uid') === ADMIN_UID
+})
 
 const nickname = ref(localStorage.getItem('doxie_nickname') || '')
 const email = ref(localStorage.getItem('doxie_email') || '')
@@ -158,6 +164,19 @@ async function updatePassword() {
           </UButton>
         </div>
         <p v-if="nicknameError" class="mt-2 text-sm font-semibold text-rose-500">{{ nicknameError }}</p>
+      </div>
+    </section>
+
+    <!-- Manage Articles -->
+    <section v-if="isAdmin" class="mb-8 overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+      <div class="flex items-center justify-between px-6 py-5">
+        <div>
+          <h2 class="text-lg font-black text-slate-900">Knowledge Base</h2>
+          <p class="mt-0.5 text-sm text-slate-500">Only administrators can submit or edit articles.</p>
+        </div>
+        <RouterLink to="/admin/knowledge">
+          <UButton icon="i-lucide-book-open">Manage Articles</UButton>
+        </RouterLink>
       </div>
     </section>
 

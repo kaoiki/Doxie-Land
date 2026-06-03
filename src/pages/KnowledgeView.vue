@@ -14,6 +14,7 @@ type ArticleItem = {
   viewCount: number
   isFeatured: boolean
   isHot: boolean
+  requireLogin: boolean
   createdAt: string
 }
 
@@ -77,6 +78,7 @@ function mapArticle(item: any): ArticleItem {
     viewCount: item.view_count || 0,
     isFeatured: item.is_featured || false,
     isHot: item.is_hot || false,
+    requireLogin: item.require_login || false,
     createdAt: formatDate(item.created_at)
   }
 }
@@ -126,8 +128,17 @@ async function fetchList() {
   finally { loading.value = false }
 }
 
+function clearSearch() {
+  keyword.value = ''
+  searchInput.value = ''
+  page.value = 1
+  fetchList()
+}
+
 function selectCategory(cat: string) {
   activeCategory.value = cat
+  keyword.value = ''
+  searchInput.value = ''
   page.value = 1
   fetchList()
 }
@@ -166,17 +177,25 @@ onMounted(async () => {
           <h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Dachshund Knowledge Base</h1>
           <p class="mt-3 text-sm leading-6 text-slate-600 sm:text-base">Care guides, health tips, feeding notes, and everything you need to know about dachshunds.</p>
         </div>
-        <div class="w-full sm:w-80">
-          <div class="relative">
+        <div class="flex w-full gap-2 sm:w-96">
+          <div class="relative flex-1">
             <input
               v-model="searchInput"
               type="text"
               placeholder="Search articles..."
-              class="w-full rounded-2xl border border-blue-500 bg-white px-4 py-3 pl-11 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+              class="w-full rounded-2xl border border-blue-500 bg-white px-4 py-3 pl-11 pr-11 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
               @keyup.enter="doSearch"
             />
             <UIcon name="i-lucide-search" class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <button
+              v-if="searchInput"
+              class="absolute right-3 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+              @click="searchInput = ''; doSearch()"
+            >
+              <UIcon name="i-lucide-x" class="h-4 w-4" />
+            </button>
           </div>
+          <UButton icon="i-lucide-search" @click="doSearch">Search</UButton>
         </div>
       </div>
     </section>
@@ -214,6 +233,9 @@ onMounted(async () => {
                 <UIcon name="i-lucide-star" class="mr-0.5 inline h-3 w-3" /> Featured
               </span>
               <span class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">{{ CATEGORY_NAMES[article.category] || article.category }}</span>
+              <span v-if="article.requireLogin" class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                <UIcon name="i-lucide-lock" class="mr-0.5 inline h-3 w-3" /> Login
+              </span>
             </div>
             <h3 class="line-clamp-2 text-lg font-bold text-slate-900 group-hover:text-blue-700">{{ article.title }}</h3>
             <p v-if="article.summary" class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{{ article.summary }}</p>
@@ -261,6 +283,9 @@ onMounted(async () => {
                 <span class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">{{ CATEGORY_NAMES[article.category] || article.category }}</span>
                 <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{{ SOURCE_LABELS[article.sourceType] || article.sourceType }}</span>
                 <span v-if="article.isHot" class="rounded-full bg-orange-100 px-2.5 py-1 text-[11px] font-bold text-orange-700">Hot</span>
+                <span v-if="article.requireLogin" class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                  <UIcon name="i-lucide-lock" class="mr-0.5 inline h-3 w-3" /> Login
+                </span>
               </div>
               <h3 class="line-clamp-2 text-base font-bold text-slate-900 group-hover:text-blue-700">{{ article.title }}</h3>
               <p v-if="article.summary" class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{{ article.summary }}</p>
@@ -293,9 +318,16 @@ onMounted(async () => {
       </aside>
     </div>
 
+    <!-- Search active indicator -->
+    <section v-if="keyword" class="mt-8 flex items-center gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-5 py-3 text-sm text-blue-800">
+      <UIcon name="i-lucide-search" class="h-4 w-4 shrink-0" />
+      <span>Search results for: <strong>"{{ keyword }}"</strong></span>
+      <UButton variant="solid" color="primary" size="sm" class="ml-auto shrink-0" @click="clearSearch">Clear</UButton>
+    </section>
+
     <!-- List only view (when category or search is active) -->
     <template v-if="activeCategory || keyword">
-      <section class="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <section class="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         <article
           v-for="article in articles" :key="article.id"
           class="group cursor-pointer overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(15,23,42,0.10)]"
@@ -308,6 +340,9 @@ onMounted(async () => {
             <div class="mb-3 flex flex-wrap gap-2">
               <span class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">{{ CATEGORY_NAMES[article.category] || article.category }}</span>
               <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">{{ SOURCE_LABELS[article.sourceType] || article.sourceType }}</span>
+              <span v-if="article.requireLogin" class="rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                <UIcon name="i-lucide-lock" class="mr-0.5 inline h-3 w-3" /> Login
+              </span>
             </div>
             <h3 class="line-clamp-2 text-base font-bold text-slate-900 group-hover:text-blue-700">{{ article.title }}</h3>
             <p v-if="article.summary" class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">{{ article.summary }}</p>
@@ -324,6 +359,7 @@ onMounted(async () => {
     <section v-if="!loading && !articles.length && (activeCategory || keyword)" class="mt-8 flex flex-col items-center rounded-[28px] border border-slate-200 bg-white py-16 text-slate-400">
       <UIcon name="i-lucide-book-open" class="h-12 w-12" />
       <p class="mt-4 text-sm font-semibold">No articles found.</p>
+      <UButton v-if="keyword" variant="solid" color="primary" size="sm" icon="i-lucide-x" class="mt-4" @click="clearSearch">Clear search</UButton>
     </section>
 
     <!-- Pagination -->

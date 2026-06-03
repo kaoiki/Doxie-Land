@@ -13,9 +13,13 @@ import ReviewsView from '../pages/ReviewsView.vue'
 import ReviewsDetailView from '../pages/ReviewsDetailView.vue'
 import AICareView from '../pages/AICareView.vue'
 import KnowledgeView from '../pages/KnowledgeView.vue'
+import KnowledgeDetailView from '../pages/KnowledgeDetailView.vue'
 import ServicesView from '../pages/ServicesView.vue'
 import ServicesDetailView from '../pages/ServicesDetailView.vue'
 import SettingsView from '../pages/SettingsView.vue'
+import AdminKnowledgeView from '../pages/AdminKnowledgeView.vue'
+import PrivacyView from '../pages/PrivacyView.vue'
+import TermsView from '../pages/TermsView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -31,9 +35,13 @@ const router = createRouter({
         { path: 'reviews/:id', name: 'review-detail', component: ReviewsDetailView, props: true },
         { path: 'ai-care', name: 'ai-care', component: AICareView },
         { path: 'knowledge', name: 'knowledge', component: KnowledgeView },
+        { path: 'knowledge/:slug', name: 'knowledge-detail', component: KnowledgeDetailView },
         { path: 'services', name: 'services', component: ServicesView },
         { path: 'services/:id', name: 'service-detail', component: ServicesDetailView, props: true },
         { path: 'settings', name: 'settings', component: SettingsView },
+        { path: 'admin/knowledge', name: 'admin-knowledge', component: AdminKnowledgeView },
+        { path: 'privacy', name: 'privacy', component: PrivacyView },
+        { path: 'terms', name: 'terms', component: TermsView },
       ]
     },
     {
