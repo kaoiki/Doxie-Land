@@ -111,11 +111,13 @@ import doxieBanner from '../assets/doxie-banner.jpg'
         <!-- Right column -->
         <div class="grid h-full gap-6">
           <div class="overflow-hidden rounded-3xl border border-green-200 bg-white shadow-sm">
-            <img
-              :src="doxiePortraitSide"
-              alt="Dachshund portrait"
-              class="h-64 w-full object-cover"
-            />
+            <div class="aspect-[4/3] w-full sm:aspect-square">
+              <img
+                :src="doxiePortraitSide"
+                alt="Dachshund portrait"
+                class="h-full w-full object-cover"
+              />
+            </div>
             <div class="p-6">
               <div
                 class="mb-3 inline-flex items-center gap-2 rounded-full bg-green-50 px-3 py-1 text-xs font-bold text-green-700"
